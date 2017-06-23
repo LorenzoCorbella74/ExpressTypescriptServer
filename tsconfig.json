@@ -1,0 +1,14 @@
+{
+   "compilerOptions": {
+       "target": "es6",
+       "module": "commonjs",
+       "baseUrl": ".",
+       "emitDecoratorMetadata": true,
+       "experimentalDecorators": true,
+       "sourceMap": true,
+       "watch": true
+   },
+   "exclude": [
+       "node_modules"
+   ]
+}

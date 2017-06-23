@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <title>Server con Node e typescript</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Server con Node/Express & Typescript e Visual Studio CODE</h1>
+            <hr>
+            <h4>Istruzioni</h4>
+            <ol>
+                <li>Da <a href="https://code.visualstudio.com/">VSC</a> aprire il task runner della compilazione TS 2 JS con
+                    <span class="label-primary">CTRL + SHIFT + B</span> o <span class="label-primary">F1 + Build</span></li>
+                <li>Da <a href="https://code.visualstudio.com/">VSC</a> far partire il server con il <strong>debug</strong> abilitato con:
+                    <ul>
+                        <li> <span class="label-primary">F5</span> partenza e step</li>
+                        <li><span class="label-primary">SHIFT + F5</span> per fermare</li>
+                        <li><span class="label-primary">CTRL + SHIFT + F5</span> per farlo ripartire</li>
+                        <li><span class="label-primary">F10</span> per next line</li>
+                        <li><span class="label-primary">F11</span> per step in</li>
+                    </ul>
+                </li>
+            </ol>
+             <h4>REST API Endpoints:</h4>
+             <ul>
+                 <li><code> GET /</code> restituisce questa pagina di istruzioni</li>
+                 <li><code> GET /api/test/:name</code> restituisce un json con il parametro passato</li>
+                 <li><code> GET /api/test?name=NodeJS</code> restituisce un json con il query string passato </li>
+                 <li><code> POST /api/test</code> restituisce un msg con il name passato (usare POSTMAN) </li>
+             </ul>
+        </div>
+    </div>
+</body>
+
+</html>
