@@ -14,10 +14,12 @@
             <h1>Server con Node/Express & Typescript e Visual Studio CODE</h1>
             <hr>
             <h4>Istruzioni</h4>
+           <p> Tramite <a href="https://code.visualstudio.com/">VS CODE</a> </p>
             <ol>
-                <li>Da <a href="https://code.visualstudio.com/">VSC</a> aprire il task runner della compilazione TS 2 JS con
+                <li>aprire il task runner della compilazione TS 2 JS con
                     <span class="label-primary">CTRL + SHIFT + B</span> o <span class="label-primary">F1 + Build</span></li>
-                <li>Da <a href="https://code.visualstudio.com/">VSC</a> far partire il server con il <strong>debug</strong> abilitato con:
+                <li>far partire il server con il <strong>debug</strong> abilitato
+                    con:
                     <ul>
                         <li> <span class="label-primary">F5</span> partenza e step</li>
                         <li><span class="label-primary">SHIFT + F5</span> per fermare</li>
@@ -27,13 +29,18 @@
                     </ul>
                 </li>
             </ol>
-             <h4>REST API Endpoints:</h4>
-             <ul>
-                 <li><code> GET /</code> restituisce questa pagina di istruzioni</li>
-                 <li><code> GET /api/test/:name</code> restituisce un json con il parametro passato</li>
-                 <li><code> GET /api/test?name=NodeJS</code> restituisce un json con il query string passato </li>
-                 <li><code> POST /api/test</code> restituisce un msg con il name passato (usare POSTMAN) </li>
-             </ul>
+            <p>Oppure da terminale:</p>
+            <ul>
+                <li> Avviare la transpilazione ed il server con: <code> npm run dev</code> </li>
+            </ul>
+            <hr>
+            <h4>REST API Endpoints:</h4>
+            <ul>
+                <li><code> GET /</code> restituisce questa pagina di istruzioni</li>
+                <li><code> GET /api/test/:name</code> restituisce un json con il parametro passato</li>
+                <li><code> GET /api/test?name=NodeJS</code> restituisce un json con il query string passato </li>
+                <li><code> POST /api/test</code> restituisce un msg con il name passato (usare POSTMAN) </li>
+            </ul>
         </div>
     </div>
 </body>

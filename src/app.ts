@@ -22,8 +22,10 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as logger from "morgan";
+import errorHandler = require("errorhandler");                // only for development
+import methodOverride = require("method-override");
 
-import { ApiController } from './controllers/ApiController';  // si importano le rotte
+import { ApiController } from './controllers/ApiController';  // si importano le routes
 
 const port: number = process.env.PORT || 5000;                // The port the express app will listen on
 
@@ -32,10 +34,14 @@ class Server {
     public app: express.Application;
 
     constructor() {
-        this.app = express();              // istanza di  express application
+        this.app = express();              // si crea l'istanza di express application
         this.registerMiddleware();
         this.registerRoutes();
         this.appListen();
+    }
+
+    public static start(): Server {
+        return new Server();
     }
 
     private registerRoutes(): void {
@@ -49,14 +55,21 @@ class Server {
 
     private registerMiddleware(): void {
         this.app.use('/', express.static(__dirname + '/public'));   // file statici
-        this.app.use(logger("dev"));                                //use logger middlware
-        this.app.use(bodyParser.json());                            //use json form parser middlware
-        this.app.use(bodyParser.urlencoded({                        //use query string parser middlware
+        this.app.use(logger("dev"));                                // use logger middlware
+        this.app.use(bodyParser.json());                            // use json form parser middlware
+        this.app.use(bodyParser.urlencoded({                        // use query string parser middlware
             extended: true
         }));
+        //catch 404 and forward to error handler
+        this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
+            err.status = 404;
+            next(err);
+        });
+        //error handling
+        this.app.use(errorHandler());
     }
 
-    private appListen() {
+    private appListen():void {
         this.app.listen(port, (err) => {
             if (err) {
                 console.log(err)
@@ -66,4 +79,4 @@ class Server {
     }
 }
 
-new Server();
+Server.start();
