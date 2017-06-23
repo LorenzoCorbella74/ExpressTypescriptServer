@@ -66,10 +66,13 @@ class Server {
             next(err);
         });
         //error handling
-        this.app.use(errorHandler());
+        if (process.env.NODE_ENV === 'development') {
+            // only use in development
+            this.app.use(errorHandler());
+        }
     }
 
-    private appListen():void {
+    private appListen(): void {
         this.app.listen(port, (err) => {
             if (err) {
                 console.log(err)
