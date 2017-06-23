@@ -19,11 +19,6 @@
     });
 */
 
-/* 
-    Esempio di server in Typescript con Node.js/Express.js 
-    SOURCE: http://www.cross-platform-blog.com/nodejs/typescript/nodejs-a-rest-web-api-expressjs-with-typescript/    
-*/
-
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as logger from "morgan";
