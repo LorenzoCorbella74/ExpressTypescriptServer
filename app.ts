@@ -26,39 +26,49 @@
 
 import * as express from "express";
 import * as bodyParser from "body-parser";
-
 import * as logger from "morgan";
 
-import {ApiController} from './controllers/ApiController';  // si importano le rotte
+import { ApiController } from './controllers/ApiController';  // si importano le rotte
 
-const app: express.Application = express();                 // istanza di  express application
-// The port the express app will listen on
-const port: number = process.env.PORT || 5000;
+const port: number = process.env.PORT || 5000;                // The port the express app will listen on
 
+class Server {
 
+    public app: express.Application;
 
-// file statici
-app.use('/', express.static(__dirname + '/public'));
-//use logger middlware
-app.use(logger("dev"));
- //use json form parser middlware
-app.use(bodyParser.json());
-//use query string parser middlware
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-// route generica per le istruzioni
-app.get('/', function (request, response) {
-    response.send('index.html');
-});
-
-// Mount the WelcomeController at the /welcome route
-app.use('/api/test', ApiController); 
-
-app.listen(port, (err) => {
-    if (err) {
-        console.log(err)
+    constructor() {
+        this.app = express();              // istanza di  express application
+        this.registerMiddleware();
+        this.registerRoutes();
+        this.appListen();
     }
-    console.log(`Server is listening on ${port}`)
-})
+
+    private registerRoutes(): void {
+        // route generica per le istruzioni
+        this.app.get('/', function (request, response) {
+            response.send('index.html');
+        });
+        // Mount the WelcomeController at the /welcome route
+        this.app.use('/api/test', ApiController);
+    }
+
+    private registerMiddleware(): void {
+        this.app.use('/', express.static(__dirname + '/public'));   // file statici
+        this.app.use(logger("dev"));                                //use logger middlware
+        this.app.use(bodyParser.json());                            //use json form parser middlware
+        this.app.use(bodyParser.urlencoded({                        //use query string parser middlware
+            extended: true
+        }));
+    }
+
+    private appListen() {
+        this.app.listen(port, (err) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(`Server is listening on ${port}`)
+        })
+    }
+}
+
+new Server();
