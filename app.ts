@@ -1,11 +1,22 @@
 /* 
-    // Esempio di server in Typescript con Node.js 
+    // Esempio di server minimo in Typescript con Node.js 
     import http = require('http');
-
     http.createServer((request, response) => {
         response.write('Hello from Node.js!');
         response.end();
     }).listen(3000);
+
+    // Esempio di server minimo in Typescript e Express.js
+    import * as express from "express";
+    let app = express();
+
+    app.get("/test", (req, res) => {
+    res.send("test ok!");
+    });
+
+    app.listen(3000, () => {
+    console.log("Porta 3000 in ascolto.");
+    });
 */
 
 /* 
