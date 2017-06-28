@@ -2,6 +2,11 @@
 import { Router, Request, Response } from 'express';
 import * as multer from "multer";
 
+// declare axios for making http requests
+import * as axios from 'axios';
+
+const EXTERNALAPI = 'http://5847d6a3b0079b12008911ad.mockapi.io/api/v1';
+
 let upload = multer();  // For POST-Support
 
 // Assign router to the express.Router() instance
@@ -45,6 +50,22 @@ router.post('/', upload.array(), (request, response) => {
         console.log('Hello ' + name);
     }
     response.send('POST request to homepage');
+});
+
+// esempio di route che recupera dati da un webservice esterno
+router.get('/external/users', (req, res) => {
+    axios.get(`${EXTERNALAPI}/users`)
+        .then(posts => {
+            res.status(200).json(posts.data);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).send({
+                status: 500,
+                message: 'internal error',
+                type: 'internal'
+            });
+        });
 });
 
 // Export the express.Router() instance to be used by server.ts

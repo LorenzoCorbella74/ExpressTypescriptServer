@@ -22,4 +22,5 @@ Oppure da terminale:
 * `GET /api/test/:name` restituisce un json con il parametro passato
 * `GET /api/test?name=NodeJS` restituisce un json con il query string passato 
 * `POST /api/test` restituisce un msg con il name passato
+* `GET /api/test/external/users` restituisce un json recuperando dati da un api esterna (request con [axios](https://github.com/mzabriskie/axios/)
 

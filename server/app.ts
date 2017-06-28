@@ -25,9 +25,10 @@ import * as logger from "morgan";
 import errorHandler = require("errorhandler");                // only for development
 import methodOverride = require("method-override");
 
-import { ApiController } from './controllers/ApiController';  // si importano le routes
+import { ApiController } from './controllers/ApiController';  // si importano le routes dello specifico file
 
 const port: number = process.env.PORT || 5000;                // The port the express app will listen on
+const argv = require('yargs').argv                            // recupera gli argomenti passati
 
 class Server {
 
@@ -38,6 +39,9 @@ class Server {
         this.registerMiddleware();
         this.registerRoutes();
         this.appListen();
+
+        // si logga la variabile passata con --ciccio nello script del pachage.json
+        console.log( `passata la variabile --ciccio ${argv.ciccio}` );
     }
 
     public static start(): Server {
