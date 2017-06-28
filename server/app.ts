@@ -25,10 +25,21 @@ import * as logger from "morgan";
 import errorHandler = require("errorhandler");                // only for development
 import methodOverride = require("method-override");
 
+import * as fs from 'fs';
+import * as glob from 'glob';
+
 import { ApiController } from './controllers/ApiController';  // si importano le routes dello specifico file
 
 const port: number = process.env.PORT || 5000;                // The port the express app will listen on
 const argv = require('yargs').argv                            // recupera gli argomenti passati
+
+const applicationRoot = __dirname.replace(/\\/g, "/");
+const ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';   //
+const apiRoot = '/mockapi';                      // http://ipaddress:port/mockapi/customers
+const mockRoot = applicationRoot + '/mocks/api'; // mocks/api/customers.json  
+const mockFilePattern = '.json';
+
+const mockRootPattern = mockRoot + '/**/*' + mockFilePattern;
 
 class Server {
 
@@ -38,10 +49,11 @@ class Server {
         this.app = express();              // si crea l'istanza di express application
         this.registerMiddleware();
         this.registerRoutes();
+        this.registerMockRoutes();
         this.appListen();
 
         // si logga la variabile passata con --ciccio nello script del pachage.json
-        console.log( `passata la variabile --ciccio ${argv.ciccio}` );
+        console.log(`passata la variabile --ciccio ${argv.ciccio}`);
     }
 
     public static start(): Server {
@@ -55,6 +67,28 @@ class Server {
         });
         // Mount the WelcomeController at the /welcome route
         this.app.use('/api/test', ApiController);
+    }
+
+    private registerMockRoutes(): void {
+        /* Read the directory tree according to the pattern specified above. */
+        var files = glob.sync(mockRootPattern);
+        var that = this;
+
+        /* Register mappings for each file found in the directory tree. */
+        if (files && files.length > 0) {
+            files.forEach(function (fileName) {
+                var mapping = apiRoot + fileName.replace(mockRoot, '').replace(mockFilePattern, '');
+                that.app.get(mapping, function (req, res) {
+                    var data = fs.readFileSync(fileName, 'utf8');
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.write(data);
+                    res.end();
+                });
+                console.log('Registered mapping: %s -> %s', mapping, fileName);
+            })
+        } else {
+            console.log('No mappings found! Please check the configuration.');
+        }
     }
 
     private registerMiddleware(): void {

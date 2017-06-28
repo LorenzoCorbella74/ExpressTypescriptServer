@@ -24,3 +24,5 @@ Oppure da terminale:
 * `POST /api/test` restituisce un msg con il name passato
 * `GET /api/test/external/users` restituisce un json recuperando dati da un api esterna (request con [axios](https://github.com/mzabriskie/axios/)
 
+Oppure mettere dei mock in formato `.json` dentro la cartella `mock/api/customers.json` e si avrà una mappatura con `// http://ipaddress:port/mockapi/customers` .
+
