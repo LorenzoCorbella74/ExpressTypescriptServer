@@ -12,6 +12,41 @@ let upload = multer();  // For POST-Support
 // Assign router to the express.Router() instance
 const router: Router = Router();
 
+router.use(function(req, res, next) { 
+    /* 
+    Se ho il FE che è servito da un server sulla porta 8000 ed il nostro server 
+    ha invece un altra porta si deve specificare (è soltanto una impostazione BE)
+    la porta da aprire, gli eventuali verbi accettati e la key di autenticazione:
+    */
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
+    // we have added this Access-Control-Allow-Headers option
+    res.header('Access-Control-Allow-Headers', 'X-Auth-Key');
+
+    next();
+});
+
+/*
+I browser fanno una così detta "preflight" 'OPTIONS' request che restituisce i metodi supportati 
+dal server con i verbi HTTP verb  ed una volta che l'approvazione arriva, la reale chiamata HTTP 
+supera lo stato pending, e viene eseguita. E' sempre bene specificare quindi anche la 'options' request...
+*/
+router.options(function (req, res, next) {
+        res.status(200).end();
+        next();
+});
+
+/*autenticazione con */
+router.get('/autentication', function (req, res) {
+        // notice how the key is all lowercase!
+        var clientKey = req.headers['x-auth-key'];
+        var acceptedKey = 'abc123';
+        if (clientKey !== acceptedKey) {
+            res.status(401).end();
+        } else {
+            res.json({data: 'Hello World'});
+        }
+    });
+
 // route con parametri
 router.get('/:name', (request, response) => {
     let name = request.params.name;
