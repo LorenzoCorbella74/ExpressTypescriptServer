@@ -24,6 +24,7 @@ import * as bodyParser from "body-parser";
 import * as logger from "morgan";
 import errorHandler = require("errorhandler");                // only for development
 import methodOverride = require("method-override");
+import open from "open";
 
 import * as fs from 'fs';
 import * as glob from 'glob';
