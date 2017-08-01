@@ -116,6 +116,7 @@ class Server {
             if (err) {
                 console.log(err)
             }
+            open('http://localhost:' + port);
             console.log(`Server is listening on ${port} in ${this.app.get('env')} mode.`);
         })
     }
